@@ -1,0 +1,31 @@
+[flake8]
+max-line-length = 200
+# it's not a bug that we aren't using all of hacking
+extend-ignore = 
+		W291, 
+		# Blank line contains whitespace
+		W293,
+		# Expected 2 blank lines
+		E302,
+		# Expected 2 blank lines after class or function definition
+		E305,
+		# Expected an indented block (comment)
+		E115,
+		# No newline at end of file
+		W292,
+		# Too many blank lines
+		E303,
+		# f-sting is missing placeholder
+		F541,
+		# Too many leading # for block comment
+		E266,
+		##### Import not used
+		F401,
+		# Blank line at the end of the file
+		W391,
+		# Line too long (300)
+		E501,
+		# Unexpected indent
+		E116,
+		# Do not use solo except
+		E722
