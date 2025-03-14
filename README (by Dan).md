@@ -3,7 +3,7 @@
 
 ## Built with
 
-- [Python](https://www.python.org/) - Programming Language, version 3.12
+- [Python](https://www.python.org/) - Programming Language, version 3.13
 - [PostgreSQL](https://www.postgresql.org/) Open-source relational database management system, version 15.
 - [Django](https://www.djangoproject.com/) - High-level Python web framework
 - [Django Rest Framework](https://www.django-rest-framework.org/) - Powerful and flexible toolkit for building Web APIs
@@ -11,7 +11,7 @@
 
 ## Prerequisites
 
-This project requires Python (preferably version 3.12) and the latest PostgreSQL.
+This project requires Python (preferably version 3.13) and the latest PostgreSQL.
 To check if they are available on your machine, try running the following commands.
 
 ### Python Installation
@@ -34,12 +34,12 @@ It is recommended to install the latest version using Homebrew, although macOS o
 2. **Install Python** (if not already installed):
 
    ```bash
-   brew install python@3.12
+   brew install python@3.13
    ```
 
 #### Linux Installation
 
-Python is typically pre-installed on most Linux distributions. However, we need 3.12 version, follow these steps.
+Python is typically pre-installed on most Linux distributions. However, we need 3.13 version, follow these steps.
 
 1. **Update the Package List**:
 
@@ -52,14 +52,14 @@ Python is typically pre-installed on most Linux distributions. However, we need 
 2. **Install Python**:
 
    ```bash
-   sudo apt install python3.12 python3.12-venv
+   sudo apt install python3.13 python3.13-venv
    ```
 
 #### Windows Installation
 
 1. **Download Python Installer**:
 
-   Visit the official Python website and download the Python 3.12 installer for Windows:
+   Visit the official Python website and download the Python 3.13 installer for Windows:
 
    [Download Python](https://www.python.org/downloads/)
 
@@ -88,7 +88,7 @@ python --version
 You should see the installed version number, e.g.:
 
 ```bash
-Python 3.12
+Python 3.13
 ```
 
 ### PostgreSQL Installation
@@ -200,7 +200,7 @@ Python 3.12
 
 5. Access PostgreSQL, create postgres database, user and password, exit
    ```bash
-   postgres psql
+   psql postgres
    CREATE DATABASE your_db_name;
    CREATE USER your_db_user_name WITH PASSWORD 'your_db_password';
    GRANT ALL PRIVILEGES ON DATABASE mydb TO myuser;

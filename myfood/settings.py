@@ -31,12 +31,6 @@ MYFOOD_DATABASE_USER = os.getenv('MYFOOD_DATABASE_USER', '')
 MYFOOD_DATABASE_PASS = os.getenv('MYFOOD_DATABASE_PASS', '')
 # Sentry
 MYFOOD_SENTRY_DSN = os.getenv('MYFOOD_SENTRY_DSN', '')
-# AWS
-MYFOOD_AWS_ACCESS_KEY = os.getenv('MYFOOD_AWS_ACCESS_KEY', '')
-MYFOOD_AWS_SECRET_ACCESS_KEY = os.getenv('MYFOOD_AWS_SECRET_ACCESS_KEY', '')
-## Open AI
-MYFOOD_OPEN_AI_API_KEY = os.getenv('MYFOOD_OPEN_AI_API_KEY', '')
-MYFOOD_OPEN_AI_ORGANIZATION = os.getenv('MYFOOD_OPEN_AI_ORGANIZATION', '')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
