@@ -16,7 +16,7 @@ on:
   push
 jobs:
   me-deployment:
-    runs-on: prod-my-food-runner
+    runs-on: hostinger-backend-runner
     environment: prod
     name: Deploy to prod
     steps:
