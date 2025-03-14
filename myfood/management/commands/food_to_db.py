@@ -21,7 +21,7 @@ csv.field_size_limit(sys.maxsize)
 class Command(BaseCommand):
     eng_food_link = settings.FOOD_CSV_LINK
     eng_food_link_gz = f'{eng_food_link}.gz'
-    local_path = 'artifacts/myfood/eng.csv'
+    local_path = 'artifacts/myfood/eng_products.csv'
     local_path_gz = f'{local_path}.gz'
     not_none_fields = ('product_name', 'brands', 'energy_kcal_100g', 'carbohydrates_100g', 'fat_100g', 'proteins_100g')
     
@@ -42,10 +42,10 @@ class Command(BaseCommand):
         # logger.info('Started to download product file')
         # self.download_file(self.eng_food_link)
 
-        # logger.info('Started to extract gz file')
-        # with gzip.open(self.local_path_gz, 'rb') as f_in:
-        #     with open(self.local_path, 'wb') as f_out:
-        #         shutil.copyfileobj(f_in, f_out)
+        logger.info('Started to extract gz file')
+        with gzip.open(self.local_path_gz, 'rb') as f_in:
+            with open(self.local_path, 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
 
 
         with open(self.local_path, newline='') as f:

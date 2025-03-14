@@ -16,7 +16,7 @@ import sentry_sdk
 
 
 ## Envs
-FOOD_CSV_LINK = os.getenv('FOOD_CSV_LINK', '')
+FOOD_CSV_LINK = os.getenv('MYFOOD_CSV_LINK', '')
 
 # Base
 MYFOOD_DEBUG = os.getenv('MYFOOD_DEBUG', 'False').lower() == 'true'
@@ -31,12 +31,12 @@ MYFOOD_DATABASE_USER = os.getenv('MYFOOD_DATABASE_USER', '')
 MYFOOD_DATABASE_PASS = os.getenv('MYFOOD_DATABASE_PASS', '')
 # Sentry
 MYFOOD_SENTRY_DSN = os.getenv('MYFOOD_SENTRY_DSN', '')
-# AWS
-MYFOOD_AWS_ACCESS_KEY = os.getenv('MYFOOD_AWS_ACCESS_KEY', '')
-MYFOOD_AWS_SECRET_ACCESS_KEY = os.getenv('MYFOOD_AWS_SECRET_ACCESS_KEY', '')
-## Open AI
-MYFOOD_OPEN_AI_API_KEY = os.getenv('MYFOOD_OPEN_AI_API_KEY', '')
-MYFOOD_OPEN_AI_ORGANIZATION = os.getenv('MYFOOD_OPEN_AI_ORGANIZATION', '')
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('MYFOOD_DJANGO_SECRET_KEY', '55^maw-d8^(x0%h5z6u3en1+kk-!w@0c^@7zr9_doljdbb9xk^')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = MYFOOD_DEBUG
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,12 +49,6 @@ sentry_sdk.init(
     dsn=MYFOOD_SENTRY_DSN,
     environment=MYFOOD_ENVIRONMENT
 )
-
-# SECURITY WARNING: keep the secret key used in production secret!
-DJANGO_SECRET_KEY = ''
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = MYFOOD_DEBUG
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'my-food.com', 'test.my-food.com']
 CSRF_TRUSTED_ORIGINS = ['https://my-food.com', 'https://test.my-food.com']

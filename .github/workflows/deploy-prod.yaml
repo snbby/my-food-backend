@@ -1,0 +1,66 @@
+name: Deploy Prod My-food backend
+env:
+  MYFOOD_CSV_LINK: ${{ vars.MYFOOD_CSV_LINK }}
+  MYFOOD_DATABASE_HOST: ${{ vars.MYFOOD_DATABASE_HOST }}
+  MYFOOD_DATABASE_PORT: ${{ vars.MYFOOD_DATABASE_PORT }}
+  MYFOOD_DATABASE_NAME: ${{ vars.MYFOOD_DATABASE_NAME }}
+  MYFOOD_DATABASE_USER: ${{ vars.MYFOOD_DATABASE_USER }}
+  MYFOOD_DATABASE_PASS: ${{ vars.MYFOOD_DATABASE_PASS }}
+  MYFOOD_DEBUG: ${{ vars.MYFOOD_DEBUG }}
+  MYFOOD_DJANGO_SECRET_KEY: ${{ vars.MYFOOD_DJANGO_SECRET_KEY }}
+  MYFOOD_ENVIRONMENT: ${{ vars.MYFOOD_ENVIRONMENT }}
+  
+
+run-name: ${{ github.event.head_commit.message }}
+on:
+  push
+jobs:
+  me-deployment:
+    runs-on: hostinger-backend-runner
+    environment: prod
+    name: Deploy to prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            nginx:
+              - 'deploy/nginx/**'
+            migrations:
+              - 'my_food/migrations/**'
+            bashrc:
+              - 'my_food/deploy/.bashrc'
+      # - name: Update nginx config
+        # if: steps.changes.outputs.nginx == 'true'
+        # run: >
+          # sudo cp deploy/nginx/nginx_prod_my-food.conf /etc/nginx/sites-enabled/nginx_myfood.conf &&
+          # sudo cp deploy/nginx/nginx_base.conf /etc/nginx/nginx.conf &&
+          # sudo service nginx reload
+
+      - name: Store env vars in file
+        run: env | grep MYFOOD > .env
+
+      - name: Update .bashrc
+        # if: steps.changes.outputs.bashrc == 'true'
+        run: sudo cp deploy/.bashrc_prod_hostinger /root/.bashrc
+
+      - name: Build both docker images
+        # if: steps.changes.outputs.migrations == 'true'
+        run: sudo docker compose build server cmd_migrations
+
+      # - name: Build only server image
+        # if: steps.changes.outputs.migrations == 'false'
+        # run: sudo docker compose build server
+
+      - name: Apply migrations
+        # if: steps.changes.outputs.migrations == 'true'
+        run: sudo docker compose run cmd_migrations
+
+      - name: Restart service
+        run: sudo docker compose up --detach server
+
+      # - name: Copy static files
+        # run: >
+          # sudo docker cp my-food-server-1:/app/django-static/ /home/ubuntu/django-static/
