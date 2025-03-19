@@ -13,7 +13,7 @@ env:
 
 run-name: ${{ github.event.head_commit.message }}
 on: 
-  workflow_dispatch
+  workflow_dispatch: 
 jobs:
   me-deployment:
     runs-on: hostinger-backend-runner
