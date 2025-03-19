@@ -28,7 +28,7 @@ class Command(BaseCommand):
     def download_file(self, url: str):
         with requests.get(url, stream=True, timeout=15) as r:
             r.raise_for_status()
-            with open(self.local_path, 'wb') as f:
+            with open(self.local_path_gz, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=8192): 
                     # If you have chunk encoded response uncomment if
                     # and set chunk_size parameter to None.
