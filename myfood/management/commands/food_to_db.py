@@ -1,11 +1,8 @@
 import csv
-import datetime
-import os
 import sys
 import gzip
 import shutil
-import numbers
-from pprint import pprint
+import os
 
 from django.core.management import BaseCommand
 from django.db.utils import DataError
@@ -19,9 +16,10 @@ from myfood import logger
 csv.field_size_limit(sys.maxsize)
 
 class Command(BaseCommand):
-    eng_food_link = settings.FOOD_CSV_LINK
+    eng_food_link = settings.MYFOOD_CSV_LINK
     eng_food_link_gz = f'{eng_food_link}.gz'
-    local_path = 'artifacts/myfood/eng_products.csv'
+    local_folder = 'artifacts'
+    local_path = f'{local_folder}/eng_products.csv'
     local_path_gz = f'{local_path}.gz'
     not_none_fields = ('product_name', 'brands', 'energy_kcal_100g', 'carbohydrates_100g', 'fat_100g', 'proteins_100g')
     
@@ -30,7 +28,7 @@ class Command(BaseCommand):
     def download_file(self, url: str):
         with requests.get(url, stream=True, timeout=15) as r:
             r.raise_for_status()
-            with open(self.local_path, 'wb') as f:
+            with open(self.local_path_gz, 'wb') as f:
                 for chunk in r.iter_content(chunk_size=8192): 
                     # If you have chunk encoded response uncomment if
                     # and set chunk_size parameter to None.
@@ -38,9 +36,12 @@ class Command(BaseCommand):
                     f.write(chunk)
 
     def handle(self, *args, **options):
+        logger.info('Create folder if not exist')
+        os.makedirs(self.local_folder, exist_ok=True)
+
         # Headers 206
-        # logger.info('Started to download product file')
-        # self.download_file(self.eng_food_link)
+        logger.info('Started to download product file')
+        self.download_file(self.eng_food_link)
 
         logger.info('Started to extract gz file')
         with gzip.open(self.local_path_gz, 'rb') as f_in:
@@ -54,8 +55,8 @@ class Command(BaseCommand):
             # self.update_data(products)
 
         # logger.info(f'Deleting local files')
-        # os.remove(self.local_path)
-        # os.remove(self.local_path_gz)
+        os.remove(self.local_path)
+        os.remove(self.local_path_gz)
 
         logger.info(f'Finished.')
         
