@@ -12,8 +12,6 @@ env:
   
 
 run-name: ${{ github.event.head_commit.message }}
-on:
-  push
 jobs:
   me-deployment:
     runs-on: hostinger-backend-runner
