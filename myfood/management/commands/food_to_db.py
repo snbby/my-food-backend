@@ -18,7 +18,7 @@ csv.field_size_limit(sys.maxsize)
 class Command(BaseCommand):
     eng_food_link = settings.MYFOOD_CSV_LINK
     eng_food_link_gz = f'{eng_food_link}.gz'
-    local_folder = 'artifacts/myfood'
+    local_folder = 'artifacts'
     local_path = f'{local_folder}/eng_products.csv'
     local_path_gz = f'{local_path}.gz'
     not_none_fields = ('product_name', 'brands', 'energy_kcal_100g', 'carbohydrates_100g', 'fat_100g', 'proteins_100g')
