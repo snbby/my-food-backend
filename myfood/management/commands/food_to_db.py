@@ -18,7 +18,8 @@ csv.field_size_limit(sys.maxsize)
 class Command(BaseCommand):
     eng_food_link = settings.MYFOOD_CSV_LINK
     eng_food_link_gz = f'{eng_food_link}.gz'
-    local_path = 'artifacts/myfood/eng_products.csv'
+    local_folder = 'artifacts/myfood'
+    local_path = f'{local_folder}/eng_products.csv'
     local_path_gz = f'{local_path}.gz'
     not_none_fields = ('product_name', 'brands', 'energy_kcal_100g', 'carbohydrates_100g', 'fat_100g', 'proteins_100g')
     
@@ -35,6 +36,9 @@ class Command(BaseCommand):
                     f.write(chunk)
 
     def handle(self, *args, **options):
+        logger.info('Create folder if not exist')
+        os.makedirs(self.local_folder, exist_ok=True)
+
         # Headers 206
         logger.info('Started to download product file')
         self.download_file(self.eng_food_link)
