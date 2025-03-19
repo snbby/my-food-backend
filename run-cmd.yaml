@@ -1,0 +1,33 @@
+name: Run Prod My-food command
+env:
+  MYFOOD_CSV_LINK: ${{ vars.MYFOOD_CSV_LINK }}
+  MYFOOD_DATABASE_HOST: ${{ vars.MYFOOD_DATABASE_HOST }}
+  MYFOOD_DATABASE_PORT: ${{ vars.MYFOOD_DATABASE_PORT }}
+  MYFOOD_DATABASE_NAME: ${{ vars.MYFOOD_DATABASE_NAME }}
+  MYFOOD_DATABASE_USER: ${{ vars.MYFOOD_DATABASE_USER }}
+  MYFOOD_DATABASE_PASS: ${{ vars.MYFOOD_DATABASE_PASS }}
+  MYFOOD_DEBUG: ${{ vars.MYFOOD_DEBUG }}
+  MYFOOD_DJANGO_SECRET_KEY: ${{ vars.MYFOOD_DJANGO_SECRET_KEY }}
+  MYFOOD_ENVIRONMENT: ${{ vars.MYFOOD_ENVIRONMENT }}
+  
+
+run-name: ${{ github.event.head_commit.message }}
+on:
+  push
+jobs:
+  me-deployment:
+    runs-on: hostinger-backend-runner
+    environment: prod
+    name: Run command on prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Store env vars in file
+        run: env | grep MYFOOD > .env
+
+      - name: Build docker image
+        run: sudo docker compose build cmd_food_to_db
+
+      - name: Run command
+        run: sudo docker compose run cmd_food_to_db

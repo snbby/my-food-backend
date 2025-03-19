@@ -16,7 +16,7 @@ import sentry_sdk
 
 
 ## Envs
-FOOD_CSV_LINK = os.getenv('MYFOOD_CSV_LINK', '')
+MYFOOD_CSV_LINK = os.getenv('MYFOOD_CSV_LINK', '')
 
 # Base
 MYFOOD_DEBUG = os.getenv('MYFOOD_DEBUG', 'False').lower() == 'true'
@@ -33,7 +33,7 @@ MYFOOD_DATABASE_PASS = os.getenv('MYFOOD_DATABASE_PASS', '')
 MYFOOD_SENTRY_DSN = os.getenv('MYFOOD_SENTRY_DSN', '')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('MYFOOD_DJANGO_SECRET_KEY', '55^maw-d8^(x0%h5z6u3en1+kk-!w@0c^@7zr9_doljdbb9xk^')
+SECRET_KEY = os.getenv('MYFOOD_DJANGO_SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = MYFOOD_DEBUG

@@ -1,11 +1,8 @@
 import csv
-import datetime
-import os
 import sys
 import gzip
 import shutil
-import numbers
-from pprint import pprint
+import os
 
 from django.core.management import BaseCommand
 from django.db.utils import DataError
@@ -19,7 +16,7 @@ from myfood import logger
 csv.field_size_limit(sys.maxsize)
 
 class Command(BaseCommand):
-    eng_food_link = settings.FOOD_CSV_LINK
+    eng_food_link = settings.MYFOOD_CSV_LINK
     eng_food_link_gz = f'{eng_food_link}.gz'
     local_path = 'artifacts/myfood/eng_products.csv'
     local_path_gz = f'{local_path}.gz'
@@ -39,8 +36,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Headers 206
-        # logger.info('Started to download product file')
-        # self.download_file(self.eng_food_link)
+        logger.info('Started to download product file')
+        self.download_file(self.eng_food_link)
 
         logger.info('Started to extract gz file')
         with gzip.open(self.local_path_gz, 'rb') as f_in:
@@ -54,8 +51,8 @@ class Command(BaseCommand):
             # self.update_data(products)
 
         # logger.info(f'Deleting local files')
-        # os.remove(self.local_path)
-        # os.remove(self.local_path_gz)
+        os.remove(self.local_path)
+        os.remove(self.local_path_gz)
 
         logger.info(f'Finished.')
         
