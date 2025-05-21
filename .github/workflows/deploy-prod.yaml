@@ -46,6 +46,10 @@ jobs:
         # if: steps.changes.outputs.bashrc == 'true'
         run: sudo cp deploy/.bashrc_prod_hostinger /root/.bashrc
 
+      - name: Update alloy config
+        # if: steps.changes.outputs.bashrc == 'true'
+        run: sudo cp deploy/config.alloy /etc/alloy/config.alloy; sudo systemctl restart alloy.service
+
       - name: Build both docker images
         # if: steps.changes.outputs.migrations == 'true'
         run: sudo docker compose build server cmd_migrations
@@ -55,6 +59,7 @@ jobs:
         # run: sudo docker compose build server
 
       - name: Apply migrations
+      
         # if: steps.changes.outputs.migrations == 'true'
         run: sudo docker compose run cmd_migrations
 
