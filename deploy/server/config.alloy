@@ -177,3 +177,19 @@ declare "journal_module" {
       forward_to    = argument.forward_to.value
   }
 }
+
+// Nginx conf
+local.file_match "logs_integrations_integrations_nginx" {
+	path_targets = [{
+		__address__ = "localhost",
+		__path__    = "<path to json nginx access log>",
+		host        = "<http_hostname>",
+		instance    = "my-food-main",
+		job         = "integrations/nginx",
+	}]
+}
+
+loki.source.file "logs_integrations_integrations_nginx" {
+	targets    = local.file_match.logs_integrations_integrations_nginx.targets
+	forward_to = [loki.write.grafana_cloud_loki.receiver]
+}
