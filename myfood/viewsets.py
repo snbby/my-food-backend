@@ -2,6 +2,7 @@ import json
 
 from rest_framework import viewsets, filters, response
 
+from myfood import sensor_logger
 from myfood.models import FoodProduct
 from myfood.serializers import FoodProductSerializer
 
@@ -26,3 +27,18 @@ class FoodProductViewSet(viewsets.ModelViewSet):
 
         # queryset = FoodProduct.objects.filter(**queryset_filter)
         return FoodProduct.objects.all()
+
+class SensorDataViewSet(viewsets.ViewSet):
+    http_method_names = ['get']
+
+    def list(self, request):
+        temperature = request.query_params.get('temperature')
+        humidity = request.query_params.get('humidity')
+        utc_datetime = request.query_params.get('utc_datetime')
+        sensor_logger.info(f'utc_datetime={utc_datetime} temp={temperature} hum={humidity}')
+
+        return response.Response({
+            'temperature': temperature,
+            'humidity': humidity,
+            'utc_datetime': utc_datetime
+        })

@@ -44,7 +44,12 @@ jobs:
 
       - name: Update .bashrc
         # if: steps.changes.outputs.bashrc == 'true'
-        run: sudo cp deploy/.bashrc_prod_hostinger /root/.bashrc
+        run: sudo cp deploy/server/.bashrc_prod_hostinger /root/.bashrc
+
+      # - name: Update alloy config
+      #   run: >
+      #     sudo cp deploy/server/config.alloy /etc/alloy/config.alloy && 
+      #     sudo systemctl restart alloy.service
 
       - name: Build both docker images
         # if: steps.changes.outputs.migrations == 'true'
