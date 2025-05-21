@@ -33,7 +33,7 @@ loki.write "grafana_cloud_loki" {
 
 // Postgres integration
 prometheus.exporter.postgres "integrations_postgres_exporter" {
-    data_source_names = ["postgresql://my_food_user:7l3V5dGFmufjpzehCGur@localhost:4999/my_food?sslmode=disabled"]
+    data_source_names = ["postgresql://my_food_user:7l3V5dGFmufjpzehCGur@localhost:4999/my_food"]
 }
 discovery.relabel "integrations_postgres_exporter" {
     targets = prometheus.exporter.postgres.integrations_postgres_exporter.targets
