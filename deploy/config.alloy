@@ -1,6 +1,6 @@
 remotecfg {
         url            = "https://fleet-management-prod-024.grafana.net"
-        id             = "test-my-food"
+        id             = "my-food"
         poll_frequency = "60s"
 
         basic_auth {
