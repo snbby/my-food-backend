@@ -196,7 +196,7 @@ loki.source.file "logs_integrations_integrations_nginx" {
 
 // Sensor logs
 receivers.filelog.temperature {
-  include = ["/var/log/server_logs/temperature.log"]  # host path
+  include = ["/var/log/server_logs/temperature.log"]
   start_at = "beginning"
 
   operators = [
@@ -207,6 +207,46 @@ receivers.filelog.temperature {
     {
       type = "logfmt"
       parse_from = "kvpairs"
+    },
+    {
+      type = "convert"
+      fields = {
+        temp = { type = "double" }
+        hum = { type = "double" }
+      }
+    },
+    {
+      type = "metric"
+      name = "temperature_celsius"
+      value = "temp"
+      attributes = {
+        sensor = "sensor_logger"
+      }
+    },
+    {
+      type = "metric"
+      name = "humidity_percent"
+      value = "hum"
+      attributes = {
+        sensor = "sensor_logger"
+      }
     }
   ]
+}
+
+prometheus.remote_write "metrics_hosted_prometheus" {
+   endpoint {
+      name = "hosted-prometheus"
+      url  = "https://prometheus-prod-58-prod-eu-central-0.grafana.net/api/prom/push"
+  
+      basic_auth {
+        username = "2453233"
+        password = "glc_eyJvIjoiMTQzNjA5NCIsIm4iOiJzdGFjay0xMjY0NDk5LWFsbG95LXNlbnNvcl9kYXRhIiwiayI6ImsybGYzUTgwZTBmMVh3MEVqWWIwMGtZMSIsIm0iOnsiciI6InByb2QtZXUtY2VudHJhbC0wIn19"
+      }
+   }
+}
+
+service.pipeline.metrics {
+  receivers = [filelog.temperature]
+  exporters = [prometheus.remote_write]
 }
