@@ -193,3 +193,20 @@ loki.source.file "logs_integrations_integrations_nginx" {
 	targets    = local.file_match.logs_integrations_integrations_nginx.targets
 	forward_to = [loki.write.grafana_cloud_loki.receiver]
 }
+
+// Sensor logs
+receivers.filelog.temperature {
+  include = ["/var/log/server_logs/temperature.log"]  # host path
+  start_at = "beginning"
+
+  operators = [
+    {
+      type = "regex_parser"
+      regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) (?P<kvpairs>.*)"
+    },
+    {
+      type = "logfmt"
+      parse_from = "kvpairs"
+    }
+  ]
+}
