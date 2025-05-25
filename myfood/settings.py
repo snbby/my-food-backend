@@ -163,6 +163,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Logging
+log_dir = '/app/.logs'
+os.makedirs(log_dir, exist_ok=True)  # creates the dir if it doesn't exist
 LOGGING = {
     'version': 1,
     'formatters': {
