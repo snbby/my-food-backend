@@ -10,7 +10,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - /var/log/server_logs/temperature.log:/app/.logs/temperature.log
+      - /var/log/server_logs/:/app/.logs/
     restart: always
   cmd_migrations:
     build:
