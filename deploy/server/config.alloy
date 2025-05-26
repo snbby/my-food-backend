@@ -248,5 +248,5 @@ prometheus.remote_write "metrics_hosted_prometheus" {
 
 service.pipeline.metrics {
   receivers = [filelog.temperature]
-  exporters = [prometheus.remote_write]
+  exporters = [prometheus.remote_write.metrics_hosted_prometheus]
 }
