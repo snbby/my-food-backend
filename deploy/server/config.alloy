@@ -201,36 +201,36 @@ receivers.filelog.temperature {
 
   operators = [
     {
-      type = "regex_parser"
-      regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) (?P<kvpairs>.*)"
+      type = "regex_parser",
+      regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) (?P<kvpairs>.*)",
     },
     {
-      type = "logfmt"
-      parse_from = "kvpairs"
+      type = "logfmt",
+      parse_from = "kvpairs",
     },
     {
-      type = "convert"
+      type = "convert",
       fields = {
-        temp = { type = "double" }
-        hum = { type = "double" }
-      }
+        temp = { type = "double" },
+        hum = { type = "double" },
+      },
     },
     {
-      type = "metric"
-      name = "temperature_celsius"
-      value = "temp"
+      type = "metric",
+      name = "temperature_celsius",
+      value = "temp",
       attributes = {
-        sensor = "sensor_logger"
-      }
+        sensor = "sensor_logger",
+      },
     },
     {
-      type = "metric"
-      name = "humidity_percent"
-      value = "hum"
+      type = "metric",
+      name = "humidity_percent",
+      value = "hum",
       attributes = {
-        sensor = "sensor_logger"
-      }
-    }
+        sensor = "sensor_logger",
+      },
+    },
   ]
 }
 
