@@ -202,14 +202,14 @@ receivers.filelog.temperature {
   operators = [
     {
       type = "regex_parser",
-      regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) utc_datetime=(?P<utc_datetime>\\S+ \\S+) temp=(?P<temp>\\S+) hum=(?P<hum>\\S+)"
+      regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) utc_datetime=(?P<utc_datetime>\\S+ \\S+) temp=(?P<temp>\\S+) hum=(?P<hum>\\S+)",
     },
     {
       type = "convert",
       fields = {
         temp = { type = "double" },
-        hum = { type = "double" }
-      }
+        hum = { type = "double" },
+      },
     },
     {
       type = "metric",
@@ -217,8 +217,8 @@ receivers.filelog.temperature {
       value = "temp",
       attributes = {
         sensor = "sensor_logger",
-        utc_datetime = "${utc_datetime}"
-      }
+        utc_datetime = "${utc_datetime}",
+      },
     },
     {
       type = "metric",
@@ -226,9 +226,9 @@ receivers.filelog.temperature {
       value = "hum",
       attributes = {
         sensor = "sensor_logger",
-        utc_datetime = "${utc_datetime}"
-      }
-    }
+        utc_datetime = "${utc_datetime}",
+      },
+    },
   ]
 }
 
