@@ -18,7 +18,6 @@ prometheus.remote_write "metrics_service" {
                         password = "glc_eyJvIjoiMTQzNjA5NCIsIm4iOiJzdGFjay0xMjY0NDk5LWFsbG95LWFsbG95X3Rva2VuIiwiayI6IjJJYXFzM1Q2NTQ2eXczejc2bTNXY0t3RCIsIm0iOnsiciI6InByb2QtZXUtY2VudHJhbC0wIn19"
                 }
         }
-        inputs = [otelcol.receiver.filelog.temperature]
 }
 
 loki.write "grafana_cloud_loki" {
@@ -194,52 +193,3 @@ loki.source.file "logs_integrations_integrations_nginx" {
 	targets    = local.file_match.logs_integrations_integrations_nginx.targets
 	forward_to = [loki.write.grafana_cloud_loki.receiver]
 }
-
-// Sensor logs
-otelcol.receiver.filelog "temperature" {
-  include = ["/var/log/server_logs/temperature.log"]
-  start_at = "beginning"
-
-  operators = [
-    {
-      type = "regex_parser",
-      regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) utc_datetime=(?P<utc_datetime>\\S+ \\S+) temp=(?P<temp>\\S+) hum=(?P<hum>\\S+)",
-    },
-    {
-      type = "convert",
-      fields = {
-        temp = { type = "double" },
-        hum = { type = "double" },
-      },
-    },
-    {
-      type = "metric",
-      name = "temperature_celsius",
-      value = "temp",
-      attributes = {
-        sensor = "sensor_logger",
-        utc_datetime = "${utc_datetime}",
-      },
-    },
-    {
-      type = "metric",
-      name = "humidity_percent",
-      value = "hum",
-      attributes = {
-        sensor = "sensor_logger",
-        utc_datetime = "${utc_datetime}",
-      },
-    },
-  ]
-}
-
-// prometheus.remote_write "metrics_service" {
-//   endpoint {
-//     url = "https://prometheus-prod-58-prod-eu-central-0.grafana.net/api/prom/push"
-//     basic_auth {
-//       username = "2453233"
-//       password = "glc_eyJvIjoiMTQzNjA5NCIsIm4iOiJzdGFjay0xMjY0NDk5LWFsbG95LWFsbG95X3Rva2VuIiwiayI6IjJJYXFzM1Q2NTQ2eXczejc2bTNXY0t3RCIsIm0iOnsiciI6InByb2QtZXUtY2VudHJhbC0wIn19"
-//     }
-//   }
-//   inputs = [otelcol.receiver.filelog.temperature]
-// }
