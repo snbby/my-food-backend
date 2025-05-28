@@ -18,6 +18,7 @@ prometheus.remote_write "metrics_service" {
                         password = "glc_eyJvIjoiMTQzNjA5NCIsIm4iOiJzdGFjay0xMjY0NDk5LWFsbG95LWFsbG95X3Rva2VuIiwiayI6IjJJYXFzM1Q2NTQ2eXczejc2bTNXY0t3RCIsIm0iOnsiciI6InByb2QtZXUtY2VudHJhbC0wIn19"
                 }
         }
+        inputs = [otelcol.receiver.filelog.temperature]
 }
 
 loki.write "grafana_cloud_loki" {
@@ -232,13 +233,13 @@ otelcol.receiver.filelog "temperature" {
   ]
 }
 
-prometheus.remote_write "metrics_service" {
-  endpoint {
-    url = "https://prometheus-prod-58-prod-eu-central-0.grafana.net/api/prom/push"
-    basic_auth {
-      username = "2453233"
-      password = "glc_eyJvIjoiMTQzNjA5NCIsIm4iOiJzdGFjay0xMjY0NDk5LWFsbG95LWFsbG95X3Rva2VuIiwiayI6IjJJYXFzM1Q2NTQ2eXczejc2bTNXY0t3RCIsIm0iOnsiciI6InByb2QtZXUtY2VudHJhbC0wIn19"
-    }
-  }
-  inputs = [otelcol.receiver.filelog.temperature]
-}
+// prometheus.remote_write "metrics_service" {
+//   endpoint {
+//     url = "https://prometheus-prod-58-prod-eu-central-0.grafana.net/api/prom/push"
+//     basic_auth {
+//       username = "2453233"
+//       password = "glc_eyJvIjoiMTQzNjA5NCIsIm4iOiJzdGFjay0xMjY0NDk5LWFsbG95LWFsbG95X3Rva2VuIiwiayI6IjJJYXFzM1Q2NTQ2eXczejc2bTNXY0t3RCIsIm0iOnsiciI6InByb2QtZXUtY2VudHJhbC0wIn19"
+//     }
+//   }
+//   inputs = [otelcol.receiver.filelog.temperature]
+// }
