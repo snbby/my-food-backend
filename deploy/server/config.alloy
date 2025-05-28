@@ -208,8 +208,8 @@ receivers.filelog.temperature {
       type = "convert",
       fields = {
         temp = { type = "double" },
-        hum = { type = "double" },
-      },
+        hum = { type = "double" }
+      }
     },
     {
       type = "metric",
@@ -217,8 +217,8 @@ receivers.filelog.temperature {
       value = "temp",
       attributes = {
         sensor = "sensor_logger",
-        utc_datetime = "${utc_datetime}",
-      },
+        utc_datetime = "${utc_datetime}"
+      }
     },
     {
       type = "metric",
@@ -226,13 +226,13 @@ receivers.filelog.temperature {
       value = "hum",
       attributes = {
         sensor = "sensor_logger",
-        utc_datetime = "${utc_datetime}",
-      },
-    },
-  ],
+        utc_datetime = "${utc_datetime}"
+      }
+    }
+  ]
 }
 
 service.pipeline.metrics {
-  receivers = [filelog.temperature],
-  exporters = [prometheus.remote_write.metrics_service],
+  receivers = [filelog.temperature]
+  exporters = [prometheus.remote_write.metrics_service]
 }
