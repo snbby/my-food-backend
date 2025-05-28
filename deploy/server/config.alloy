@@ -195,7 +195,7 @@ loki.source.file "logs_integrations_integrations_nginx" {
 }
 
 // Sensor logs
-receivers.filelog.temperature {
+otelcol.receiver.filelog "temperature" {
   include = ["/var/log/server_logs/temperature.log"]
   start_at = "beginning"
 
@@ -232,7 +232,7 @@ receivers.filelog.temperature {
   ]
 }
 
-service.pipeline.metrics {
-  receivers = [filelog.temperature]
+otelcol.processor.service "metrics" {
+  receivers = [otelcol.receiver.filelog.temperature]
   exporters = [prometheus.remote_write.metrics_service]
 }
