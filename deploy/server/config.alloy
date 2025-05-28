@@ -201,38 +201,38 @@ receivers.filelog.temperature {
 
   operators = [
     {
-      type = "regex_parser"
+      type = "regex_parser",
       regex = "^(?P<timestamp>\\S+) level=(?P<level>\\S+) name=(?P<name>\\S+) utc_datetime=(?P<utc_datetime>\\S+ \\S+) temp=(?P<temp>\\S+) hum=(?P<hum>\\S+)"
     },
     {
-      type = "convert"
+      type = "convert",
       fields = {
-        temp = { type = "double" }
-        hum = { type = "double" }
-      }
+        temp = { type = "double" },
+        hum = { type = "double" },
+      },
     },
     {
-      type = "metric"
-      name = "temperature_celsius"
-      value = "temp"
+      type = "metric",
+      name = "temperature_celsius",
+      value = "temp",
       attributes = {
-        sensor = "sensor_logger"
-        utc_datetime = "${utc_datetime}"
-      }
+        sensor = "sensor_logger",
+        utc_datetime = "${utc_datetime}",
+      },
     },
     {
-      type = "metric"
-      name = "humidity_percent"
-      value = "hum"
+      type = "metric",
+      name = "humidity_percent",
+      value = "hum",
       attributes = {
-        sensor = "sensor_logger"
-        utc_datetime = "${utc_datetime}"
-      }
-    }
-  ]
+        sensor = "sensor_logger",
+        utc_datetime = "${utc_datetime}",
+      },
+    },
+  ],
 }
 
 service.pipeline.metrics {
-  receivers = [filelog.temperature]
-  exporters = [prometheus.remote_write.metrics_service]
+  receivers = [filelog.temperature],
+  exporters = [prometheus.remote_write.metrics_service],
 }
