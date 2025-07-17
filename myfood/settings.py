@@ -39,7 +39,7 @@ sentry_sdk.init(
 )
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'my-food.com', 'test.my-food.com', 'snobby.es']
-CSRF_TRUSTED_ORIGINS = ['https://my-food.com', 'https://test.my-food.com']
+CSRF_TRUSTED_ORIGINS = ['https://my-food.com', 'https://test.my-food.com', 'https://snobby.es']
 
 
 # Application definition
