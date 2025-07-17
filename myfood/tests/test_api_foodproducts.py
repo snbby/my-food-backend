@@ -1,6 +1,7 @@
 import pytest
 from django.test import Client
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 from myfood.tests.factories import FoodProductFactory
 
@@ -48,3 +49,29 @@ def test_search_food_products_q_param():
     product_names = [item['product_name'] for item in data['items']]
     for name in product_names:
         assert 'eggs' in name.lower()
+
+@pytest.mark.django_db
+def test_search_detailed_food_products_auth():
+    # Create some products
+    batch = 12
+    FoodProductFactory.create_batch(batch)
+    client = Client()
+
+    # 1. Unauthenticated request should return 401
+    response = client.get(
+        path='/api/foodproducts/search_detailed/',
+        content_type='application/json',
+    )
+    assert response.status_code == 401
+
+    # 2. Authenticated request should return default number of items
+    User = get_user_model()
+    user = User.objects.create_user(username='testuser', password='testpass')
+    client.login(username='testuser', password='testpass')
+    response = client.get(
+        path='/api/foodproducts/search_detailed/',
+        content_type='application/json',
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data['items']) == min(settings.NINJA_PAGINATION_PER_PAGE, batch)
