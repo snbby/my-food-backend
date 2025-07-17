@@ -75,3 +75,7 @@ def test_search_detailed_food_products_auth():
     assert response.status_code == 200
     data = response.json()
     assert len(data['items']) == min(settings.NINJA_PAGINATION_PER_PAGE, batch)
+    # Check that two additional fields are present in each item
+    for item in data['items']:
+        assert 'fiber_100g' in item
+        assert 'sugars_100g' in item

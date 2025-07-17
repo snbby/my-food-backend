@@ -28,7 +28,7 @@ def search_food_products(request, q: Optional[str] = None):
         qs = qs.filter(product_name__icontains=q)
     return qs
 
-@api.get('/foodproducts/search_detailed/', response=List[FoodProductSchema], auth=django_auth)
+@api.get('/foodproducts/search_detailed/', response=List[FoodProductDetailSchema], auth=django_auth)
 @paginate
 def search_detailed_food_products(request, q: Optional[str] = None):
     qs = FoodProduct.objects.all()
