@@ -1,5 +1,5 @@
 snobby.es {
-    handle_path /static/* {
+    handle_path /django-static/* {
         root * /srv/static
         file_server
     }
