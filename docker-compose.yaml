@@ -21,6 +21,7 @@ services:
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data   
     depends_on:
       - server
 
@@ -51,3 +52,6 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+volumes:
+  caddy_data:
