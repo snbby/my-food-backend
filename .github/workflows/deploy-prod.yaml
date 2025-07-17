@@ -22,34 +22,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            nginx:
-              - 'deploy/nginx/**'
-            migrations:
-              - 'my_food/migrations/**'
-            bashrc:
-              - 'my_food/deploy/.bashrc'
-      # - name: Update nginx config
-        # if: steps.changes.outputs.nginx == 'true'
-        # run: >
-          # sudo cp deploy/nginx/nginx_prod_my-food.conf /etc/nginx/sites-enabled/nginx_myfood.conf &&
-          # sudo cp deploy/nginx/nginx_base.conf /etc/nginx/nginx.conf &&
-          # sudo service nginx reload
 
       - name: Store env vars in file
         run: env | grep MYFOOD > .env
-
-      - name: Update .bashrc
-        # if: steps.changes.outputs.bashrc == 'true'
-        run: sudo cp deploy/server/.bashrc_prod_hostinger /root/.bashrc
-
-      # - name: Update alloy config
-      #   run: >
-      #     sudo cp deploy/server/config.alloy /etc/alloy/config.alloy && 
-      #     sudo systemctl restart alloy.service
 
       - name: Build both docker images
         # if: steps.changes.outputs.migrations == 'true'

@@ -1,19 +1,10 @@
 from django.db import models
-from django.utils.functional import classproperty
 
 
 class FoodProduct(models.Model):
     def __str__(self):
         return f'{self.product_name}|{self.brands}'
-
-    @classproperty
-    def admin_fields(self):
-        return ['id', 'product_name', 'brands', 'countries', 'fat_100g', 'carbohydrates_100g', 'proteins_100g']
     
-    @classproperty
-    def api_fields(self):
-        return ['product_name', 'brands', 'countries', 'energy_kcal_100g', 'fat_100g', 'carbohydrates_100g', 'proteins_100g', 'fiber_100g', 'sugars_100g', 'salt_100g', 'saturated_fat_100g']
-
     class Meta:
         indexes = [
             models.Index(fields=['product_name', 'brands']),

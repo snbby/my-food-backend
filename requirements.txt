@@ -1,8 +1,10 @@
 django==5.1.7
 django-admin-interface==0.29.4
-djangorestframework==3.15.2
+django-ninja==1.1.0
 gunicorn==23.0.0
-faker==37.0.0
+faker==37.3.0
+pytest-faker==2.0.0
+factory-boy==3.3.3
 pydantic==2.10.6
 pytest==8.3.5
 pytest-django==4.10.0
