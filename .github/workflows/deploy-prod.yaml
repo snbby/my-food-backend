@@ -22,38 +22,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            nginx:
-              - 'deploy/nginx/**'
-            migrations:
-              - 'my_food/migrations/**'
-            bashrc:
-              - 'my_food/deploy/.bashrc'
-      # - name: Update nginx config
-        # if: steps.changes.outputs.nginx == 'true'
-        # run: >
-          # sudo cp deploy/nginx/nginx_prod_my-food.conf /etc/nginx/sites-enabled/nginx_myfood.conf &&
-          # sudo cp deploy/nginx/nginx_base.conf /etc/nginx/nginx.conf &&
-          # sudo service nginx reload
 
       - name: Store env vars in file
         run: env | grep MYFOOD > .env
 
-      - name: Update .bashrc
-        # if: steps.changes.outputs.bashrc == 'true'
-        run: sudo cp deploy/server/.bashrc_prod_hostinger /root/.bashrc
-
-      # - name: Update alloy config
-      #   run: >
-      #     sudo cp deploy/server/config.alloy /etc/alloy/config.alloy && 
-      #     sudo systemctl restart alloy.service
-
-      - name: Build both docker images
+      - name: Build all docker images
         # if: steps.changes.outputs.migrations == 'true'
-        run: sudo docker compose build server cmd_migrations
+        run: sudo docker compose build server caddy cmd_migrations
 
       # - name: Build only server image
         # if: steps.changes.outputs.migrations == 'false'
@@ -64,7 +39,7 @@ jobs:
         run: sudo docker compose run cmd_migrations
 
       - name: Restart service
-        run: sudo docker compose up --detach server
+        run: sudo docker compose up --detach server caddy
 
       # - name: Copy static files
         # run: >

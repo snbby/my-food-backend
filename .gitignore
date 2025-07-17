@@ -1,17 +1,15 @@
 .env
 .env.prod
 .DS_Store
-
 .idea/
 .pytest_cache
 .vscode
 .venv
+
 __pycache__
 django-static
-
 tmp.json
 tmp.py
-set_env.sh
 
 artifacts/myfood/eng_products.csv
 artifacts/myfood/eng_products.csv.gz

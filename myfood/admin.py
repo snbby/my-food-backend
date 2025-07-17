@@ -1,19 +1,17 @@
 from django.contrib import admin
-from django.utils.html import format_html
 
 from myfood.models import ModelServerHealth, FoodProduct
 from myfood.utils import attributed
-from myfood.mixins import MyFoodModelAdmin
 
 
 @admin.register(FoodProduct)
-class AdminFoodProduct(MyFoodModelAdmin):
-    list_display = FoodProduct().admin_fields
+class AdminFoodProduct(admin.ModelAdmin):
+    list_display = ('id', 'product_name', 'brands', 'countries', 'fat_100g', 'carbohydrates_100g', 'proteins_100g')
     search_fields = ('brands', 'product_name')
 
 
 @admin.register(ModelServerHealth)
-class AdminServerHealth(MyFoodModelAdmin):
+class AdminServerHealth(admin.ModelAdmin):
     readonly_fields = (
         'id', 'dsk_total', 'dsk_free', 'min_5_load', 'min_10_load', 'min_15_load', 'ttl_memory',
         'fre_memory', 'created_at'

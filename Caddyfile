@@ -1,0 +1,8 @@
+snobby.es {
+    handle_path /django-static/* {
+        root * /srv/static
+        file_server
+    }
+
+    reverse_proxy server:8000
+}

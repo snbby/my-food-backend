@@ -11,7 +11,22 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - /var/log/server_logs/:/app/.logs/
+      - static_data:/app/django-static/ 
     restart: always
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data   
+      - static_data:/srv/static/ 
+    depends_on:
+      - server
+
   cmd_migrations:
     build:
       context: .
@@ -20,6 +35,7 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
   cmd_food_to_db:
     build:
       context: .
@@ -38,3 +54,7 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+volumes:
+  caddy_data:
+  static_data:
