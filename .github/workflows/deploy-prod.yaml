@@ -26,9 +26,9 @@ jobs:
       - name: Store env vars in file
         run: env | grep MYFOOD > .env
 
-      - name: Build both docker images
+      - name: Build all docker images
         # if: steps.changes.outputs.migrations == 'true'
-        run: sudo docker compose build server cmd_migrations
+        run: sudo docker compose build server caddy cmd_migrations
 
       # - name: Build only server image
         # if: steps.changes.outputs.migrations == 'false'
@@ -39,7 +39,7 @@ jobs:
         run: sudo docker compose run cmd_migrations
 
       - name: Restart service
-        run: sudo docker compose up --detach server
+        run: sudo docker compose up --detach server caddy
 
       # - name: Copy static files
         # run: >
