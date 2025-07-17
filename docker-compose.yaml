@@ -13,6 +13,17 @@ services:
       - /var/log/server_logs/:/app/.logs/
     restart: always
 
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - server
+
   cmd_migrations:
     build:
       context: .
@@ -21,7 +32,7 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-      
+
   cmd_food_to_db:
     build:
       context: .
