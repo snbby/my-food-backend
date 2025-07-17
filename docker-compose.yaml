@@ -11,6 +11,7 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - /var/log/server_logs/:/app/.logs/
+      - static_data:/app/django-static/ 
     restart: always
 
   caddy:
@@ -22,6 +23,7 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data   
+      - static_data:/srv/static/ 
     depends_on:
       - server
 
@@ -55,3 +57,4 @@ services:
 
 volumes:
   caddy_data:
+  static_data:
