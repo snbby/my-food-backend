@@ -1,7 +1,7 @@
 services:
   server:
     build:
-      context: .
+      context: ./services/django
       dockerfile: deploy/server.Dockerfile
     command: >
       gunicorn myfood.wsgi:application
@@ -21,7 +21,7 @@ services:
 
   tests:
     build:
-      context: .
+      context: ./services/django
       dockerfile: deploy/server.Dockerfile
     command:
       - pytest
@@ -45,7 +45,7 @@ services:
 
   cmd_migrations:
     build:
-      context: .
+      context: ./services/django
       dockerfile: deploy/server.Dockerfile
     command: >
       python 
@@ -58,7 +58,7 @@ services:
 
   cmd_food_to_db:
     build:
-      context: .
+      context: ./services/django
       dockerfile: deploy/server.Dockerfile
     command: >
       python 
@@ -72,16 +72,30 @@ services:
 
   cmd_server_health:
     build:
-      context: .
+      context: ./services/django
       dockerfile: deploy/server.Dockerfile
     command: >
-      python 
-      manage.py 
+      python
+      manage.py
       server_health
     env_file:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  fastapi:
+    build:
+      context: ./services/fastapi
+    command: uvicorn app:app --host 0.0.0.0 --port 8001
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+    depends_on:
+      - server
 
 volumes:
   caddy_data:
