@@ -3,17 +3,11 @@ services:
     build:
       context: .
       dockerfile: deploy/server.Dockerfile
-    command:
-      - gunicorn
-      - myfood.wsgi:application
-      - --name
-      - myfood
-      - --bind
-      - 0.0.0.0:8000
-      - --log-level
-      - info
-      - --log-file
-      - -
+    command: >
+      gunicorn myfood.wsgi:application
+      --name myfood
+      --bind 0.0.0.0:8000
+      --log-level info
     ports:
       - "8000:8000"
     env_file:
