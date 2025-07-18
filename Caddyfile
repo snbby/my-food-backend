@@ -4,7 +4,7 @@ django.my-food.com, django.snobby.es {
         file_server
     }
 
-    reverse_proxy server:8000
+    reverse_proxy django:8000
 }
 
 fastapi.my-food.com, fastapi.snobby.es {

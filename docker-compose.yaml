@@ -1,5 +1,5 @@
 services:
-  server:
+  django:
     build:
       context: ./services/django
     command: >
@@ -34,7 +34,7 @@ services:
       - "host.docker.internal:host-gateway"
     restart: always
 
-  tests:
+  django_tests:
     build:
       context: ./services/django
     command:

@@ -27,23 +27,14 @@ jobs:
         run: env | grep MYFOOD > .env
 
       - name: Build all docker images
-        # if: steps.changes.outputs.migrations == 'true'
-        run: sudo docker compose build server fastapi caddy cmd_migrations tests
+        run: sudo docker compose build django fastapi caddy cmd_migrations django_tests
 
       - name: Run tests
-        run: sudo docker compose run --rm tests
-
-      # - name: Build only server image
-        # if: steps.changes.outputs.migrations == 'false'
-        # run: sudo docker compose build server
+        run: sudo docker compose run --rm django_tests
 
       - name: Apply migrations
-        # if: steps.changes.outputs.migrations == 'true'
         run: sudo docker compose run cmd_migrations
 
       - name: Restart service
-        run: sudo docker compose up --detach server caddy fastapi
+        run: sudo docker compose up --detach django caddy fastapi
 
-      # - name: Copy static files
-        # run: >
-          # sudo docker cp my-food-server-1:/app/django-static/ /home/ubuntu/django-static/
