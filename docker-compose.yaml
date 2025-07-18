@@ -2,7 +2,6 @@ services:
   server:
     build:
       context: ./services/django
-      dockerfile: deploy/server.Dockerfile
     command: >
       gunicorn myfood.wsgi:application
       --name myfood
@@ -22,7 +21,6 @@ services:
   tests:
     build:
       context: ./services/django
-      dockerfile: deploy/server.Dockerfile
     command:
       - pytest
     env_file:
@@ -46,7 +44,6 @@ services:
   cmd_migrations:
     build:
       context: ./services/django
-      dockerfile: deploy/server.Dockerfile
     command: >
       python 
       manage.py 
@@ -59,7 +56,6 @@ services:
   cmd_food_to_db:
     build:
       context: ./services/django
-      dockerfile: deploy/server.Dockerfile
     command: >
       python 
       manage.py 
@@ -86,7 +82,11 @@ services:
   fastapi:
     build:
       context: ./services/fastapi
-    command: uvicorn app:app --host 0.0.0.0 --port 8001
+    command: >
+      uvicorn 
+      app:app 
+      --host 0.0.0.0 
+      --port 8001
     env_file:
       - .env
     ports:
