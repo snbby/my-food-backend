@@ -55,7 +55,7 @@ services:
       - caddy_data:/data   
       - static_data:/srv/static/ 
     depends_on:
-      - server
+      - django
 
   cmd_migrations:
     build:
