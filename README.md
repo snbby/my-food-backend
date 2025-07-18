@@ -1,6 +1,6 @@
 # MyFood Backend
 
-This repository contains the backend for **MyFood**, a small experiment written in [Django](https://www.djangoproject.com/) and [Django Ninja](https://django-ninja.rest-framework.com/). It exposes a simple API that allows searching for food products sourced from the [OpenFood Facts](https://world.openfoodfacts.org/) database.
+This repository contains the backend for **MyFood**, a small experiment written in [Django](https://www.djangoproject.com/) and FastAPI. It exposes a simple API that allows searching for food products sourced from the [OpenFood Facts](https://world.openfoodfacts.org/) database.
 
 The project demonstrates how to build a lightweight REST API, run background tasks with custom Django management commands and orchestrate everything with Docker.
 
