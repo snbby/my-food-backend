@@ -46,7 +46,9 @@ services:
   cmd_migrations:
     build:
       context: .
-      dockerfile: deploy/cmd_migrations.Dockerfile
+      dockerfile: deploy/server.Dockerfile
+    command:
+      - python manage.py migrate
     env_file:
       - .env
     extra_hosts:
@@ -55,7 +57,9 @@ services:
   cmd_food_to_db:
     build:
       context: .
-      dockerfile: deploy/cmd_food_to_db.Dockerfile
+      dockerfile: deploy/server.Dockerfile
+    command:
+      - python manage.py food_to_db
     env_file:
       - .env
     extra_hosts:
@@ -65,7 +69,9 @@ services:
   cmd_server_health:
     build:
       context: .
-      dockerfile: deploy/cmd_server_health.Dockerfile
+      dockerfile: deploy/server.Dockerfile
+    command:
+      - python manage.py server_health
     env_file:
       - .env
     extra_hosts:
