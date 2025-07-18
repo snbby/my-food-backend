@@ -1,4 +1,4 @@
-snobby.es {
+django.my-food.com, django.snobby.es {
     handle_path /django-static/* {
         root * /srv/static
         file_server
@@ -6,3 +6,12 @@ snobby.es {
 
     reverse_proxy server:8000
 }
+
+fastapi.my-food.com, fastapi.snobby.es {
+    reverse_proxy fastapi:8001
+}
+
+golang.my-food.com, golang.snobby.es {
+    reverse_proxy golang:8002
+}
+
