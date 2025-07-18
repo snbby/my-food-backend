@@ -47,8 +47,10 @@ services:
     build:
       context: .
       dockerfile: deploy/server.Dockerfile
-    command:
-      - python manage.py migrate
+    command: >
+      python 
+      manage.py 
+      migrate
     env_file:
       - .env
     extra_hosts:
@@ -58,8 +60,10 @@ services:
     build:
       context: .
       dockerfile: deploy/server.Dockerfile
-    command:
-      - python manage.py food_to_db
+    command: >
+      python 
+      manage.py 
+      food_to_db
     env_file:
       - .env
     extra_hosts:
@@ -70,8 +74,10 @@ services:
     build:
       context: .
       dockerfile: deploy/server.Dockerfile
-    command:
-      - python manage.py server_health
+    command: >
+      python 
+      manage.py 
+      server_health
     env_file:
       - .env
     extra_hosts:
