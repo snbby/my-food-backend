@@ -28,7 +28,7 @@ jobs:
 
       - name: Build all docker images
         # if: steps.changes.outputs.migrations == 'true'
-        run: sudo docker compose build server caddy cmd_migrations tests
+        run: sudo docker compose build server fastapi caddy cmd_migrations tests
 
       - name: Run tests
         run: sudo docker compose run --rm tests
@@ -42,7 +42,7 @@ jobs:
         run: sudo docker compose run cmd_migrations
 
       - name: Restart service
-        run: sudo docker compose up --detach server caddy
+        run: sudo docker compose up --detach server caddy fastapi
 
       # - name: Copy static files
         # run: >
