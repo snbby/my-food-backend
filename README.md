@@ -15,6 +15,7 @@ The project demonstrates how to build a lightweight REST API, run background tas
 - Test suite using `pytest` and `factory-boy` (see `myfood/tests/`).
 - Docker Compose orchestrates the server container, scheduled job images and a Caddy reverse proxy.
 - Caddy acts as a reverse proxy and serves static files over HTTPS.
+- A small FastAPI service replicates the main search endpoints.
 - GitHub Actions workflow automatically builds images and redeploys them to the production server.
 
 ## Local setup
@@ -34,7 +35,7 @@ The project demonstrates how to build a lightweight REST API, run background tas
 Install the dependencies first:
 
 ```bash
-pip install -r requirements.txt
+pip install -r services/django/requirements.txt
 ```
 
 Then execute:
@@ -51,7 +52,7 @@ docker compose run --rm server pytest
 
 ## API overview
 
-The main endpoints are defined in `myfood/api.py` and include:
+The main endpoints for the Django service are defined in `services/django/myfood/api.py` and include:
 
 - `/api/foodproducts/search/` – unauthenticated search with pagination.
 - `/api/foodproducts/search_detailed/` – authenticated search returning additional nutritional fields.
