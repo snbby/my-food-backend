@@ -28,7 +28,10 @@ jobs:
 
       - name: Build all docker images
         # if: steps.changes.outputs.migrations == 'true'
-        run: sudo docker compose build server caddy cmd_migrations
+        run: sudo docker compose build server caddy cmd_migrations tests
+
+      - name: Run tests
+        run: sudo docker compose run --rm tests
 
       # - name: Build only server image
         # if: steps.changes.outputs.migrations == 'false'

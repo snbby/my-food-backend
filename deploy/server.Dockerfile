@@ -12,10 +12,6 @@ COPY . .
 
 RUN python manage.py collectstatic --no-input --clear
 
-CMD [ \
-  "gunicorn", "myfood.wsgi:application", \
-  "--name", "myfood", \
-  "--bind", "0.0.0.0:8000", \
-  "--log-level", "info", \
-  "--log-file", "-" \
-]
+# The command to run is specified by docker-compose for both the production
+# server and the test service. This allows using the same image in different
+# contexts.

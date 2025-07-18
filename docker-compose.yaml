@@ -3,6 +3,17 @@ services:
     build:
       context: .
       dockerfile: deploy/server.Dockerfile
+    command:
+      - gunicorn
+      - myfood.wsgi:application
+      - --name
+      - myfood
+      - --bind
+      - 0.0.0.0:8000
+      - --log-level
+      - info
+      - --log-file
+      - -
     ports:
       - "8000:8000"
     env_file:
@@ -11,8 +22,19 @@ services:
       - "host.docker.internal:host-gateway"
     volumes:
       - /var/log/server_logs/:/app/.logs/
-      - static_data:/app/django-static/ 
+      - static_data:/app/django-static/
     restart: always
+
+  tests:
+    build:
+      context: .
+      dockerfile: deploy/server.Dockerfile
+    command:
+      - pytest
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   caddy:
     image: caddy:2
