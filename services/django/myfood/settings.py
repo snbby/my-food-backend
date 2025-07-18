@@ -38,8 +38,8 @@ sentry_sdk.init(
     environment=MYFOOD_ENVIRONMENT
 )
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'my-food.com', 'test.my-food.com', 'snobby.es']
-CSRF_TRUSTED_ORIGINS = ['https://my-food.com', 'https://test.my-food.com', 'https://snobby.es']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'django.my-food.com', 'django.snobby.es']
+CSRF_TRUSTED_ORIGINS = ['https://django.my-food.com', 'https://django.snobby.es']
 
 
 # Application definition

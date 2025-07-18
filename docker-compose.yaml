@@ -1,5 +1,5 @@
 services:
-  server:
+  django:
     build:
       context: ./services/django
     command: >
@@ -18,7 +18,23 @@ services:
       - static_data:/app/django-static/
     restart: always
 
-  tests:
+  fastapi:
+    build:
+      context: ./services/fastapi
+    command: >
+      uvicorn 
+      app:app 
+      --host 0.0.0.0 
+      --port 8001
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+
+  django_tests:
     build:
       context: ./services/django
     command:
@@ -39,7 +55,7 @@ services:
       - caddy_data:/data   
       - static_data:/srv/static/ 
     depends_on:
-      - server
+      - django
 
   cmd_migrations:
     build:
@@ -65,7 +81,6 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-
   cmd_server_health:
     build:
       context: ./services/django
@@ -78,24 +93,6 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
-
-  fastapi:
-    build:
-      context: ./services/fastapi
-    command: >
-      uvicorn 
-      app:app 
-      --host 0.0.0.0 
-      --port 8001
-    env_file:
-      - .env
-    ports:
-      - "8001:8001"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    restart: always
-    depends_on:
-      - server
 
 volumes:
   caddy_data:
