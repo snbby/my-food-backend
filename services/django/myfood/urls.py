@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from myfood.api import api
 
 def trigger_error(request):
@@ -10,4 +10,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('sentry-debug/', trigger_error),
     path('api/', api.urls),
+    path('drf/', include('myfood.drf_urls')),
 ]
