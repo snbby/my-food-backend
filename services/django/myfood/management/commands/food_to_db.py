@@ -1,17 +1,17 @@
 import csv
-import sys
 import gzip
-import shutil
 import os
+import shutil
+import sys
 
-from django.core.management import BaseCommand
-from django.db.utils import DataError
-from django.conf import settings
 import requests
 
+from django.conf import settings
+from django.core.management import BaseCommand
+from django.db.utils import DataError
+from myfood import logger
 from myfood.models import FoodProduct
 from myfood.utils import init_kwargs
-from myfood import logger
 
 csv.field_size_limit(sys.maxsize)
 

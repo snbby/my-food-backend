@@ -1,9 +1,10 @@
 import pytest
-from django.test import Client
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
-
+from django.test import Client
 from myfood.tests.factories import FoodProductFactory
+
 
 @pytest.mark.django_db
 def test_pagination():

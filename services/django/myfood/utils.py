@@ -1,6 +1,7 @@
 import functools
 from typing import Callable, Optional
 
+
 def str2bool(some_str: str) -> bool:
     return some_str.lower() == 'true'
 

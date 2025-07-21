@@ -1,7 +1,7 @@
 import pytest
-from django.test import Client
-from django.contrib.auth import get_user_model
 
+from django.contrib.auth import get_user_model
+from django.test import Client
 from myfood.tests.factories import FoodProductFactory
 
 
@@ -32,9 +32,9 @@ def test_drf_search_food_products_q_param():
 def test_drf_search_detailed_food_products_auth():
     FoodProductFactory.create_batch(12)
     client = Client()
-    # Unauthenticated request should return 401
+    # Unauthenticated request should return 403
     response = client.get('/drf/foodproducts/search_detailed/')
-    assert response.status_code == 401
+    assert response.status_code == 403
 
     User = get_user_model()
     user = User.objects.create_user(username='testuser', password='testpass')

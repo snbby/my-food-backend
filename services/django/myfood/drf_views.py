@@ -1,9 +1,10 @@
-from django.db.models import QuerySet
 from rest_framework import generics, permissions, serializers
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
-from .models import FoodProduct
+from django.db.models import QuerySet
+
+from myfood.models import FoodProduct
 
 
 class FoodPagination(LimitOffsetPagination):

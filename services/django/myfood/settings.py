@@ -3,7 +3,6 @@ from pathlib import Path
 
 import sentry_sdk
 
-
 ## Envs
 MYFOOD_CSV_LINK = os.getenv('MYFOOD_CSV_LINK', '')
 
@@ -54,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myfood',
+    'rest_framework',
+    'drf_spectacular'
 ]
 
 # REST_FRAMEWORK = {
@@ -61,6 +62,10 @@ INSTALLED_APPS = [
 #     # 'DEFAULT_PAGINATION_CLASS': 'myfood.utils.CustomCursorPagination',
 #     'PAGE_SIZE': 25
 # }
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

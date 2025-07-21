@@ -1,7 +1,8 @@
-import psutil
-from django.core.management import BaseCommand
 import shutil
 
+import psutil
+
+from django.core.management import BaseCommand
 from myfood.models import ModelServerHealth
 
 
