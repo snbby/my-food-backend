@@ -1,6 +1,5 @@
 from django.contrib import admin
-
-from myfood.models import ModelServerHealth, FoodProduct
+from myfood.models import FoodProduct, ModelServerHealth
 from myfood.utils import attributed
 
 

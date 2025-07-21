@@ -1,8 +1,9 @@
 from typing import List, Optional
 
 from ninja import NinjaAPI, Schema
-from ninja.security import django_auth
 from ninja.pagination import paginate
+from ninja.security import django_auth
+
 from myfood.models import FoodProduct
 
 api = NinjaAPI()

@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from myfood.models import FoodProduct
-
 from django.core.management import BaseCommand
+from myfood.models import FoodProduct
 
 
 class Command(BaseCommand):
