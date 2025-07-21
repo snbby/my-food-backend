@@ -13,6 +13,9 @@ services:
       - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      postgres:
+        condition: service_healthy
     volumes:
       - /var/log/server_logs/:/app/.logs/
       - static_data:/app/django-static/
@@ -30,6 +33,9 @@ services:
       - .env
     ports:
       - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: always
@@ -41,6 +47,9 @@ services:
       - pytest
     env_file:
       - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
@@ -54,8 +63,6 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data   
       - static_data:/srv/static/ 
-    depends_on:
-      - django
 
   cmd_migrations:
     build:
@@ -66,8 +73,25 @@ services:
       migrate
     env_file:
       - .env
+    depends_on:
+      postgres:
+        condition: service_healthy 
     extra_hosts:
       - "host.docker.internal:host-gateway"
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ${MYFOOD_DATABASE_NAME}
+      POSTGRES_USER: ${MYFOOD_DATABASE_USER}
+      POSTGRES_PASSWORD: ${MYFOOD_DATABASE_PASS}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${MYFOOD_DATABASE_USER} -d ${MYFOOD_DATABASE_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   cmd_food_to_db:
     build:
@@ -78,22 +102,13 @@ services:
       food_to_db
     env_file:
       - .env
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  cmd_server_health:
-    build:
-      context: ./services/django
-      dockerfile: deploy/server.Dockerfile
-    command: >
-      python
-      manage.py
-      server_health
-    env_file:
-      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
 volumes:
   caddy_data:
   static_data:
+  postgres_data:
