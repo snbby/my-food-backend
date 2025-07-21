@@ -35,9 +35,6 @@ jobs:
       - name: Apply migrations
         run: sudo docker compose run cmd_migrations
 
-      - name: Fill db with dummy data
-        run: sudo docker compose run cmd_fill_db
-
       - name: Restart service
         run: sudo docker compose up --detach django caddy fastapi
 
