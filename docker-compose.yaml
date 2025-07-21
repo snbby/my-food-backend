@@ -108,6 +108,16 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  cmd_fill_db:
+    build:
+      context: ./services/django
+    command: python manage.py fill_food_products --count 100000
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
   caddy_data:
   static_data:
