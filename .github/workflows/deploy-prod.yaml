@@ -27,7 +27,7 @@ jobs:
         run: env | grep MYFOOD > .env
 
       - name: Build all docker images
-        run: sudo docker compose build django fastapi caddy cmd_migrations django_tests postgres
+        run: sudo docker compose build django fastapi caddy cmd_migrations django_tests
 
       - name: Run tests
         run: sudo docker compose run --rm django_tests
@@ -36,5 +36,5 @@ jobs:
         run: sudo docker compose run cmd_migrations
 
       - name: Restart service
-        run: sudo docker compose up --detach django caddy fastapi postgres
+        run: sudo docker compose up --detach django caddy fastapi
 
