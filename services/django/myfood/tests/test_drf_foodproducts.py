@@ -2,7 +2,7 @@ import pytest
 
 from django.contrib.auth import get_user_model
 from django.test import Client
-from myfood.tests.factories import FoodProductFactory
+from myfood.factories import FoodProductFactory
 
 
 @pytest.mark.django_db
