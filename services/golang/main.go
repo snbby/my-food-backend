@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
@@ -13,18 +14,20 @@ import (
 )
 
 type FoodProduct struct {
-	ID                *int     `json:"id" gorm:"column:id"`
-	CreatedAt         *string  `json:"created_at" gorm:"column:created_at"`
-	UpdatedAt         *string  `json:"updated_at" gorm:"column:updated_at"`
-	ProductName       *string  `json:"product_name" gorm:"column:product_name"`
-	Brands            *string  `json:"brands" gorm:"column:brands"`
-	Countries         *string  `json:"countries" gorm:"column:countries"`
-	Carbohydrates100g *float64 `json:"carbohydrates_100g" gorm:"column:carbohydrates_100g"`
-	Proteins100g      *float64 `json:"proteins_100g" gorm:"column:proteins_100g"`
-	Fat100g           *float64 `json:"fat_100g" gorm:"column:fat_100g"`
+	ID                int       `json:"id" gorm:"column:id"`
+	CreatedAt         time.Time `json:"created_at" gorm:"column:created_at"`
+	UpdatedAt         time.Time `json:"updated_at" gorm:"column:updated_at"`
+	ProductName       string    `json:"product_name" gorm:"column:product_name"`
+	Brands            string    `json:"brands" gorm:"column:brands"`
+	Countries         string    `json:"countries" gorm:"column:countries"`
+	Carbohydrates100g *float64  `json:"carbohydrates_100g" gorm:"column:carbohydrates_100g"`
+	Proteins100g      *float64  `json:"proteins_100g" gorm:"column:proteins_100g"`
+	Fat100g           *float64  `json:"fat_100g" gorm:"column:fat_100g"`
 }
 
-func (FoodProduct) TableName() string { return "myfood_foodproduct" }
+func (FoodProduct) TableName() string {
+	return "myfood_foodproduct"
+}
 
 var db *gorm.DB
 
@@ -43,13 +46,6 @@ func initDB() {
 	}
 }
 
-// @Summary List food products
-// @Param q query string false "Product name contains"
-// @Param limit query int false "Limit" default(30)
-// @Param offset query int false "Offset" default(0)
-// @Produce json
-// @Success 200 {array} FoodProduct
-// @Router /api/foodproducts/search/ [get]
 func getProducts(c *gin.Context) {
 	q := c.Query("q")
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "30"))
@@ -69,7 +65,8 @@ func getProducts(c *gin.Context) {
 		query = query.Where("product_name ILIKE ?", "%"+q+"%")
 	}
 	var items []FoodProduct
-	if err := query.Offset(offset).Limit(limit).Find(&items).Error; err != nil {
+	err := query.Offset(offset).Limit(limit).Find(&items).Error
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"detail": err.Error()})
 		return
 	}
@@ -80,7 +77,8 @@ func main() {
 	initDB()
 	r := gin.Default()
 	r.GET("/api/foodproducts/search/", getProducts)
-	if err := r.Run(":8002"); err != nil {
+	err := r.Run(":8002")
+	if err != nil {
 		log.Fatal(err)
 	}
 }
