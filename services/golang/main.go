@@ -8,8 +8,6 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -82,7 +80,6 @@ func main() {
 	initDB()
 	r := gin.Default()
 	r.GET("/api/foodproducts/search/", getProducts)
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	if err := r.Run(":8002"); err != nil {
 		log.Fatal(err)
 	}
