@@ -6,9 +6,45 @@ This repository contains the backend for **MyFood**, a collection of small servi
 - a **FastAPI** project under `services/fastapi`;
 - a **Golang** service using the Gin framework under `services/golang`.
 
-All of them expose a search endpoint for food products, populated with fake data sourced from the [OpenFood Facts](https://world.openfoodfacts.org/) dataset.
+All of them expose a search endpoint for food products, populated with fake data sourced from the [OpenFood Facts](https://world.openfoodfacts.org/) dataset.  
+Services are deployed under my-food.com domain, you can try the endpoints:
 
-The project demonstrates how to build lightweight REST APIs, run background tasks with custom Django management commands and orchestrate everything with Docker
+https://django.my-food.com/api/foodproducts/search/?limit=30  
+https://fastapi.my-food.com/api/foodproducts/search/?limit=30  
+https://golang.my-food.com/api/foodproducts/search/?limit=30
+
+## Load testing
+The project demonstrates how services behave under load testing.
+
+The testing includes:
+- 100000 Postgres database entries
+- Requests are sent with the limit of 30 items
+- Requests are sent through cloud k6 load testing tool
+- Django uses DRF and gunicorn, FastAPI is sync and uses uvicorn, Golang uses Gin framework
+- Services are deployed on the same server, one docker container for each service
+- Caddy is used as a webserver behind docker containers
+- The tests are executed sequentially, not in parallel
+
+Stages of the load are the following:
+```
+  stages: [
+    { duration: '1m', target: 30 },
+    { duration: '1m', target: 60 },
+    { duration: '1m', target: 100 },
+    { duration: '1m', target: 100 },
+    { duration: '1m', target: 0 },
+  ]
+```
+#### Django
+![Django k6 load](artifacts/myfood/k6_django_graph.png)
+![Django k6 load](artifacts/myfood/k6_django_detail.png)
+#### Fastapi
+![Fastapi k6 load](artifacts/myfood/k6_fastapi_graph.png)
+![Fastapi k6 load](artifacts/myfood/k6_fastapi_detail.png)
+#### Golang
+![Golang k6 load](artifacts/myfood/k6_golang_graph.png)
+![Golang k6 load](artifacts/myfood/k6_golang_detail.png)
+
 
 ## Features
 
@@ -22,22 +58,6 @@ The project demonstrates how to build lightweight REST APIs, run background task
 - Database migrations are performed through the Django ORM.
 - Focus on CI/CD best practices with all services deployed in Docker containers.
 
-## API overview
-The main endpoints for the Django service are defined in `services/django/myfood/api.py` and include:
-
-- `/api/foodproducts/search/` – unauthenticated search with pagination.
-- `/api/foodproducts/search_detailed/` – authenticated search returning additional nutritional fields.
-
-Both endpoints support a `q` query parameter to filter by product name. When deployed the public URLs are:
-
-- `https://django.my-food.com/api/foodproducts/search/`
-- `https://django.my-food.com/api/foodproducts/search_detailed/`
-
-The FastAPI (`services/fastapi`) and Golang (`services/golang`) apps expose the same search functionality at:
-
-- `https://fastapi.my-food.com/api/foodproducts/search/`
-- `https://golang.my-food.com/api/foodproducts/search/`
-
 ## Deployment
 
 The service is deployed using a combination of Docker Compose and GitHub Actions.
@@ -45,9 +65,9 @@ The service is deployed using a combination of Docker Compose and GitHub Actions
 
 The workflow `.github/workflows/deploy-prod.yaml` runs on a remote runner. It builds new images, stores environment variables in a `.env` file, runs database migrations and finally restarts the stack with `docker compose up --detach django fastapi golang caddy`.
 
-## Local setup
+## Local Docker setup
 
-1. Clone the repository and create a `.env` file with environment variables:
+1. Clone the repository and create a `.env` file in root folder with environment variables:
 ```bash
 MYFOOD_DATABASE_HOST: postgres # For docker installation
 MYFOOD_DATABASE_PORT: 5432
