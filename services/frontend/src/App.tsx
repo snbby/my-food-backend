@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch('https://golang.my-food.com/api/foodproducts/search/?limit=30')
+    fetch('/api/foodproducts/search/?limit=30')
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.error(err));
