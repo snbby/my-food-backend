@@ -4,9 +4,9 @@ table {
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 40px;
   text-align: center;
-
+  font-family: 'Courier New', Courier, monospace;
 }
 
 th {
@@ -23,3 +23,13 @@ th, td {
 tr:hover {
   background-color: #f8f8f8;
 }
+
+.pager {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+}
+.pager button:disabled { opacity: 0.5; cursor: not-allowed; }
+.page-meta { font-size: 0.9rem; color: #666; }
+.error { color: #c00; }
