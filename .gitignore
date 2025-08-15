@@ -10,6 +10,7 @@ __pycache__
 django-static
 tmp.json
 tmp.py
+node_modules/
 
 artifacts/myfood/eng_products.csv
 artifacts/myfood/eng_products.csv.gz

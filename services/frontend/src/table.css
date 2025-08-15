@@ -1,0 +1,35 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+h1 {
+  font-size: 40px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+th {
+  background-color: #26890D;
+  color: white;    
+}
+
+th, td {
+  padding: 0.5rem;
+  border: 1px solid #92B83B;
+  text-align: left;
+}
+
+tr:hover {
+  background-color: #f8f8f8;
+}
+
+.pager {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 12px 0;
+}
+.pager button:disabled { opacity: 0.5; cursor: not-allowed; }
+.page-meta { font-size: 0.9rem; color: #666; }
+.error { color: #c00; }
