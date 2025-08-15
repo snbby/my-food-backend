@@ -15,3 +15,7 @@ golang.my-food.com, golang.snobby.es {
     reverse_proxy golang:8002
 }
 
+my-food.com {
+    reverse_proxy frontend:3000
+}
+
