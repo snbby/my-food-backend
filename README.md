@@ -38,6 +38,12 @@ Stages of the load are the following:
 #### Django
 ![Django k6 load](artifacts/myfood/k6_django_graph.png)
 ![Django k6 load](artifacts/myfood/k6_django_detail.png)
+#### Django OrJson serialization
+![Django k6 load](artifacts/myfood/k6_django_orjson_graph.png)
+![Django k6 load](artifacts/myfood/k6_django_orjson_detail.png)
+#### Django MsgSpec serialization
+![Django k6 load](artifacts/myfood/k6_django_msgspec_graph.png)
+![Django k6 load](artifacts/myfood/k6_django_msgspec_detail.png)
 #### Fastapi
 ![Fastapi k6 load](artifacts/myfood/k6_fastapi_graph.png)
 ![Fastapi k6 load](artifacts/myfood/k6_fastapi_detail.png)
