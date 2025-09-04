@@ -5,6 +5,8 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, Sp
 
 urlpatterns = [
     path('foodproducts/search/', views.SearchFoodProducts.as_view()),
+    path('foodproducts-orjson/search/', views.SearchFoodProductsOrJson.as_view()),
+    path('foodproducts-msgspec/search/', views.SearchFoodProductsMsgSpec.as_view()),
     path('foodproducts/search_detailed/', views.SearchDetailedFoodProducts.as_view()),
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     # Swagger UI

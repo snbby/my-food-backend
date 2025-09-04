@@ -5,6 +5,7 @@
 .pytest_cache
 .vscode
 .venv
+.vite
 __pycache__
 django-static
 node_modules/
